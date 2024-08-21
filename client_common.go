@@ -16,8 +16,6 @@ import (
 	"time"
 )
 
-type Des3EncryptFunc func(data []byte, key string) string
-
 func (t *Client) getApiUrl(path string) string {
 	return prodApiUrl + path
 }

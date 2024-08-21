@@ -15,7 +15,7 @@ type Client struct {
 	scanSignKey          string // 扫码产品签名秘钥
 	scanEncryptKey       string // 扫码产品加密秘钥
 	settlementSignKey    string // 结算产品签名秘钥
-	settlementEncryptKey string // 结算产品签名秘钥
+	settlementEncryptKey string // 结算产品加密秘钥
 	accountPaySignKey    string // 虚拟账号支付产品签名秘钥
 	accountPayEncryptKey string // 虚拟账号支付产品加密秘钥
 	isProd               bool   // 是否正式环境

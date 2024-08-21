@@ -18,11 +18,8 @@ import (
 
 type Des3EncryptFunc func(data []byte, key string) string
 
-func (t *Client) getApiUrl() string {
-	if t.isProd {
-		return prodApiUrl
-	}
-	return testApiUrl
+func (t *Client) getApiUrl(path string) string {
+	return prodApiUrl + path
 }
 
 // merchantPost 商户相关接口请求
@@ -32,7 +29,7 @@ func (t *Client) merchantPost(interfaceName string, body any) (response *req.Res
 	bodyEncryptStr := t.Des3Encrypt(bodyJsonBytes, t.commonEncryptKey)
 	merchantBaseReqMap := map[string]string{"interfaceName": interfaceName, "merchantNo": t.PlatformMerchantId,
 		"body": bodyEncryptStr, "sign": t.MD5Sign([]string{bodyEncryptStr, t.PlatformMerchantId}, t.commonSignKey)}
-	if response, err = t.reqClient.R().SetFormData(merchantBaseReqMap).Post(t.getApiUrl() + path); err != nil {
+	if response, err = t.reqClient.R().SetFormData(merchantBaseReqMap).Post(t.getApiUrl(path)); err != nil {
 		return nil, err
 	}
 	return
@@ -46,7 +43,7 @@ func (t *Client) merchantUploadPost(interfaceName string, body any) (response *r
 	merchantBaseReqMap := map[string]string{"interfaceName": interfaceName, "merchantNo": t.PlatformMerchantId,
 		"body": bodyEncryptStr, "sign": t.MD5Sign([]string{bodyEncryptStr, t.PlatformMerchantId}, t.commonSignKey)}
 	request := t.reqClient.R().SetFormData(merchantBaseReqMap)
-	if response, err = request.Post(t.getApiUrl() + path); err != nil {
+	if response, err = request.Post(t.getApiUrl(path)); err != nil {
 		return nil, err
 	}
 	return
@@ -60,7 +57,7 @@ func (t *Client) merchantAgreementPost(interfaceName string, body any) (response
 	merchantBaseReqMap := map[string]string{"interfaceName": interfaceName, "merchantNo": t.PlatformMerchantId,
 		"body": bodyEncryptStr, "sign": t.MD5Sign([]string{bodyEncryptStr, t.PlatformMerchantId}, t.commonSignKey)}
 	request := t.reqClient.R().SetFormData(merchantBaseReqMap)
-	if response, err = request.Post(t.getApiUrl() + path); err != nil {
+	if response, err = request.Post(t.getApiUrl(path)); err != nil {
 		return nil, err
 	}
 	return
@@ -93,7 +90,7 @@ func (t *Client) appPayPost(body any) (response *req.Response, err error) {
 	}
 	_, _ = jsonNode.Set("sign", ast.NewString(t.MD5Sign(signVals, t.scanSignKey)))
 	bodyMap, _ := jsonNode.Map()
-	if response, err = t.reqClient.R().SetFormDataAnyType(bodyMap).Post(t.getApiUrl() + path); err != nil {
+	if response, err = t.reqClient.R().SetFormDataAnyType(bodyMap).Post(t.getApiUrl(path)); err != nil {
 		return nil, err
 	}
 	return
@@ -128,7 +125,7 @@ func (t *Client) settlementPost(body any) (response *req.Response, err error) {
 	_, _ = jsonNode.Set("signType", ast.NewString("SM3WITHSM2"))
 	_, _ = jsonNode.Set("sign", ast.NewString(t.SM3WithSM2Sign(signValsBytes, t.settlementSignKey)))
 	bodyMap, _ := jsonNode.Map()
-	if response, err = t.reqClient.R().SetFormDataAnyType(bodyMap).Post(t.getApiUrl() + path); err != nil {
+	if response, err = t.reqClient.R().SetFormDataAnyType(bodyMap).Post(t.getApiUrl(path)); err != nil {
 		return nil, err
 	}
 	return
@@ -146,7 +143,7 @@ func (t *Client) merchantBalancePost(body any) (response *req.Response, err erro
 	merchantBaseReqMap := map[string]string{"body": bodyEncryptStr, "merchantId": t.PlatformMerchantId,
 		"encryptionKey": t.SM2Encrypt(bodyEncryptKey, t.accountPayEncryptKey), "timestamp": timestampStr,
 		"signatureMethod": "SM3WITHSM2", "sign": t.SM3WithSM2Sign([]byte(bodyEncryptStr), t.accountPaySignKey)}
-	if response, err = t.reqClient.R().SetFormData(merchantBaseReqMap).Post(t.getApiUrl() + path); err != nil {
+	if response, err = t.reqClient.R().SetFormData(merchantBaseReqMap).Post(t.getApiUrl(path)); err != nil {
 		return nil, err
 	}
 	return
@@ -164,7 +161,7 @@ func (t *Client) accountPayPost(pathSuffix string, body any) (response *req.Resp
 	merchantBaseReqMap := map[string]string{"body": bodyEncryptStr, "merchantId": t.PlatformMerchantId,
 		"encryptionKey": t.SM2Encrypt(bodyEncryptKey, t.accountPayEncryptKey), "timestamp": timestampStr,
 		"signatureMethod": "SM3WITHSM2", "sign": t.SM3WithSM2Sign([]byte(bodyEncryptStr), t.accountPaySignKey)}
-	if response, err = t.reqClient.R().SetFormData(merchantBaseReqMap).Post(t.getApiUrl() + path); err != nil {
+	if response, err = t.reqClient.R().SetFormData(merchantBaseReqMap).Post(t.getApiUrl(path)); err != nil {
 		return nil, err
 	}
 	return

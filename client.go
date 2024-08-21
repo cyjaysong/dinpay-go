@@ -18,19 +18,20 @@ type Client struct {
 	settlementEncryptKey string // 结算产品加密秘钥
 	accountPaySignKey    string // 虚拟账号支付产品签名秘钥
 	accountPayEncryptKey string // 虚拟账号支付产品加密秘钥
-	isProd               bool   // 是否正式环境
 	reqClient            *reqclient.Client
 }
 
 func NewClient(platformMerchantId, commonSignKey, commonEncryptKey, scanSignKey, scanEncryptKey,
 	settlementSignKey, settlementEncryptKey, accountPaySignKey, accountPayEncryptKey string, isProd bool) (client *Client) {
-	client = &Client{isProd: isProd, PlatformMerchantId: platformMerchantId,
-		commonSignKey: commonSignKey, commonEncryptKey: commonEncryptKey, scanSignKey: scanSignKey, scanEncryptKey: scanEncryptKey,
+	client = &Client{PlatformMerchantId: platformMerchantId,
+		commonSignKey: commonSignKey, commonEncryptKey: commonEncryptKey,
+		scanSignKey: scanSignKey, scanEncryptKey: scanEncryptKey,
 		settlementSignKey: settlementSignKey, settlementEncryptKey: settlementEncryptKey,
-		accountPaySignKey: accountPaySignKey, accountPayEncryptKey: accountPayEncryptKey}
+		accountPaySignKey: accountPaySignKey, accountPayEncryptKey: accountPayEncryptKey,
+	}
 	client.reqClient = reqclient.C().SetTimeout(time.Second * 10).SetCommonRetryCount(1)
-	//if !isProd {
-	client.reqClient.DevMode()
-	//}
+	if !isProd {
+		client.reqClient.DevMode()
+	}
 	return
 }

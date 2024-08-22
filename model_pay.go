@@ -406,7 +406,7 @@ type AppPayOrderRefundQueryReq struct {
 	BizType        string `json:"P1_bizType" sign:"1"`        // 交易类型,固定为:AppPayRefundQuery
 	RefundOrderId  string `json:"P2_refundOrderId" sign:"1"`  // 商户系统内部订单号,要求50字符以内,同一商户号下订单号唯一与合利宝退款订单流水号二选一
 	CustomerNumber string `json:"P3_customerNumber" sign:"1"` // 合利宝分配的商户号
-	SerialNumber   string `json:"P4_serialNumber" sign:"1"`   // 合利宝平台返回的退款订单流水号与商户退款订单号二选一
+	SerialNumber   string `json:"P4_serialNumber" sign:"0"`   // 合利宝平台返回的退款订单流水号与商户退款订单号二选一
 }
 
 // AppPayOrderRefundQueryRes 交易订单退款查询接口

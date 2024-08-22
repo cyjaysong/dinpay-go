@@ -9,7 +9,7 @@ const testApiUrl = "https://payment.dinpay.com"
 const prodApiUrl = "https://payment.dinpay.com"
 
 type Client struct {
-	PlatformMerchantId   string // 接入商ID
+	platformMerchantId   string // 接入商ID
 	commonSignKey        string // 公共产品签名秘钥
 	commonEncryptKey     string // 公共产品加密秘钥
 	scanSignKey          string // 扫码产品签名秘钥
@@ -23,7 +23,7 @@ type Client struct {
 
 func NewClient(platformMerchantId, commonSignKey, commonEncryptKey, scanSignKey, scanEncryptKey,
 	settlementSignKey, settlementEncryptKey, accountPaySignKey, accountPayEncryptKey string, isProd bool) (client *Client) {
-	client = &Client{PlatformMerchantId: platformMerchantId,
+	client = &Client{platformMerchantId: platformMerchantId,
 		commonSignKey: commonSignKey, commonEncryptKey: commonEncryptKey,
 		scanSignKey: scanSignKey, scanEncryptKey: scanEncryptKey,
 		settlementSignKey: settlementSignKey, settlementEncryptKey: settlementEncryptKey,

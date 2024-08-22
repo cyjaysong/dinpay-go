@@ -25,8 +25,8 @@ func (t *Client) merchantPost(interfaceName string, body any) (response *req.Res
 	const path = "/trx/merchantEntry/interface.action"
 	bodyJsonBytes, _ := sonic.Marshal(body)
 	bodyEncryptStr := t.Des3Encrypt(bodyJsonBytes, t.commonEncryptKey)
-	merchantBaseReqMap := map[string]string{"interfaceName": interfaceName, "merchantNo": t.PlatformMerchantId,
-		"body": bodyEncryptStr, "sign": t.MD5Sign([]string{bodyEncryptStr, t.PlatformMerchantId}, t.commonSignKey)}
+	merchantBaseReqMap := map[string]string{"interfaceName": interfaceName, "merchantNo": t.platformMerchantId,
+		"body": bodyEncryptStr, "sign": t.MD5Sign([]string{bodyEncryptStr, t.platformMerchantId}, t.commonSignKey)}
 	if response, err = t.reqClient.R().SetFormData(merchantBaseReqMap).Post(t.getApiUrl(path)); err != nil {
 		return nil, err
 	}
@@ -38,8 +38,8 @@ func (t *Client) merchantUploadPost(interfaceName string, body any) (response *r
 	const path = "/trx/merchantEntry/upload.action"
 	bodyJsonBytes, _ := sonic.Marshal(body)
 	bodyEncryptStr := t.Des3Encrypt(bodyJsonBytes, t.commonEncryptKey)
-	merchantBaseReqMap := map[string]string{"interfaceName": interfaceName, "merchantNo": t.PlatformMerchantId,
-		"body": bodyEncryptStr, "sign": t.MD5Sign([]string{bodyEncryptStr, t.PlatformMerchantId}, t.commonSignKey)}
+	merchantBaseReqMap := map[string]string{"interfaceName": interfaceName, "merchantNo": t.platformMerchantId,
+		"body": bodyEncryptStr, "sign": t.MD5Sign([]string{bodyEncryptStr, t.platformMerchantId}, t.commonSignKey)}
 	request := t.reqClient.R().SetFormData(merchantBaseReqMap)
 	if response, err = request.Post(t.getApiUrl(path)); err != nil {
 		return nil, err
@@ -52,8 +52,8 @@ func (t *Client) merchantAgreementPost(interfaceName string, body any) (response
 	const path = "/trx/merchantAgreement/ signContract.action"
 	bodyJsonBytes, _ := sonic.Marshal(body)
 	bodyEncryptStr := t.Des3Encrypt(bodyJsonBytes, t.commonEncryptKey)
-	merchantBaseReqMap := map[string]string{"interfaceName": interfaceName, "merchantNo": t.PlatformMerchantId,
-		"body": bodyEncryptStr, "sign": t.MD5Sign([]string{bodyEncryptStr, t.PlatformMerchantId}, t.commonSignKey)}
+	merchantBaseReqMap := map[string]string{"interfaceName": interfaceName, "merchantNo": t.platformMerchantId,
+		"body": bodyEncryptStr, "sign": t.MD5Sign([]string{bodyEncryptStr, t.platformMerchantId}, t.commonSignKey)}
 	request := t.reqClient.R().SetFormData(merchantBaseReqMap)
 	if response, err = request.Post(t.getApiUrl(path)); err != nil {
 		return nil, err
@@ -138,7 +138,7 @@ func (t *Client) merchantBalancePost(body any) (response *req.Response, err erro
 	bodyJsonBytes, _ := sonic.Marshal(body)
 	bodyEncryptKey := nanoid.MustGenerate(alphabet, 16)
 	bodyEncryptStr := t.SM4Encrypt(bodyJsonBytes, bodyEncryptKey)
-	merchantBaseReqMap := map[string]string{"body": bodyEncryptStr, "merchantId": t.PlatformMerchantId,
+	merchantBaseReqMap := map[string]string{"body": bodyEncryptStr, "merchantId": t.platformMerchantId,
 		"encryptionKey": t.SM2Encrypt(bodyEncryptKey, t.accountPayEncryptKey), "timestamp": timestampStr,
 		"signatureMethod": "SM3WITHSM2", "sign": t.SM3WithSM2Sign([]byte(bodyEncryptStr), t.accountPaySignKey)}
 	if response, err = t.reqClient.R().SetFormData(merchantBaseReqMap).Post(t.getApiUrl(path)); err != nil {
@@ -156,7 +156,7 @@ func (t *Client) accountPayPost(pathSuffix string, body any) (response *req.Resp
 	bodyJsonBytes, _ := sonic.Marshal(body)
 	bodyEncryptKey := nanoid.MustGenerate(alphabet, 16)
 	bodyEncryptStr := t.SM4Encrypt(bodyJsonBytes, bodyEncryptKey)
-	merchantBaseReqMap := map[string]string{"body": bodyEncryptStr, "merchantId": t.PlatformMerchantId,
+	merchantBaseReqMap := map[string]string{"body": bodyEncryptStr, "merchantId": t.platformMerchantId,
 		"encryptionKey": t.SM2Encrypt(bodyEncryptKey, t.accountPayEncryptKey), "timestamp": timestampStr,
 		"signatureMethod": "SM3WITHSM2", "sign": t.SM3WithSM2Sign([]byte(bodyEncryptStr), t.accountPaySignKey)}
 	if response, err = t.reqClient.R().SetFormData(merchantBaseReqMap).Post(t.getApiUrl(path)); err != nil {

@@ -77,7 +77,7 @@ type MerchantRegisterReq struct {
 	SettleMode               string `json:"settleMode"`                         // 结算模式,constants.SettleMode,MERCHANT:按商户结算;MERGE:按结算人结算,同平台商下,结算卡号一致的结算单合并成一笔出款
 	SettlementPhone          string `json:"settlementPhone,omitempty"`          // 结算人手机号
 	ArrivalMode              string `json:"arrivalMode,omitempty"`              // 结算到账方式,constants.ArrivalMode;NORMAL:银行卡,ELECTRONIC:银行电子账户
-	CardIdCard               string `json:"cardIdCard,omitempty"`               // 开户人身份证
+	CardIdCard               string `json:"cardIdCard,omitempty"`               // 开户人身份证(非法人结算时传递)
 	CardNo                   string `json:"cardNo"`                             // 结算银行卡账号
 	CardName                 string `json:"cardName"`                           // 结算银行卡开户名
 	CardType                 string `json:"cardType"`                           // 结算卡类型,constants.SettleBankType;TOPRIVATE:对私,TOPUBLIC:对公
@@ -104,8 +104,8 @@ type MerchantRegisterReq struct {
 	IcpFiling                string `json:"icpFiling"`                          // ICP备案号，平台商类型为服务商时必填，平台商类型为SaaS系统商的子商户默认读取平台商的 ICP 备案号
 
 	// Deprecated: 请勿直接赋值,应调用ServiceCodes添加
-	ServiceCodesJson string `json:"serviceCodes,omitempty"` // 支付宝商户申请服务类型,如:"[\"F2F\",\"PRE_F2F\"]",constants.AlipayServiceCode
-	ServiceCodes     string `json:"-"`                      // 支付宝商户申请服务类型,如:["F2F","PRE_F2F"],constants.AlipayServiceCode
+	ServiceCodesJson string   `json:"serviceCodes,omitempty"` // 支付宝商户申请服务类型,如:"[\"F2F\",\"PRE_F2F\"]",constants.AlipayServiceCode
+	ServiceCodes     []string `json:"-"`                      // 支付宝商户申请服务类型,如:["F2F","PRE_F2F"],constants.AlipayServiceCode
 }
 
 // MerchantRegisterRes 商户入驻

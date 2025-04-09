@@ -135,7 +135,7 @@ type MerchantRegisterQueryRes struct {
 // MerchantRegisterNotifyReqBody 商户入驻结果异步通知Body
 type MerchantRegisterNotifyReqBody struct {
 	OrderNo        string `json:"orderNo"`              // 订单号 进件时的订单号
-	RegisterStatus string `json:"registeStatus"`        // 进件状态 INIT:待审核;OVERRULE:申请驳回;AUDITED:审核通过
+	RegisterStatus string `json:"registeStatus"`        // 进件状态 OVERRULE:申请驳回;AUDITED:审核通过
 	Msg            string `json:"msg,omitempty"`        // 进件状态说明 当RegisterStatus为 INIT,AUDITED时返回
 	MerchantId     string `json:"merchantId,omitempty"` // 子商户商编 只有进件状态为审核通过才返回
 }

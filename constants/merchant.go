@@ -160,12 +160,6 @@ var (
 		"SUBJECT_TYPE_OTHERS": "其他组织",
 	}
 
-	// MoneyPeriod 资金周期
-	MoneyPeriod = map[string]string{
-		"T1": "T1",
-		"D0": "D0",
-	}
-
 	// SettleBankType 结算卡类型
 	SettleBankType = map[string]string{
 		"TOPRIVATE": "对私",

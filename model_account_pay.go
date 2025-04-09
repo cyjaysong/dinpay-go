@@ -15,8 +15,8 @@ type AccountPayParametersOrderParameter struct {
 	RecordedMerchantId string                `json:"recordedMerchantId"`       // 收款商编,与付款商户merchantId隶属同一服务商
 	OrderType          string                `json:"orderType"`                // 订单类型,ALLOWANCE:活动补贴,需关联交易订单;TRANSFER:资金划拨,无需关联交易订单
 	PayAmount          float64               `json:"payAmount"`                // 订单金额,订单金额:不能小于等于零,小数点后最多两位
-	GoodsName          string                `json:"goodsName"`                // 商品名称
-	OrderDesc          string                `json:"orderDesc,omitempty"`      // 订单备注
+	GoodsName          string                `json:"goodsName"`                // 商品名称,长度限制128
+	OrderDesc          string                `json:"orderDesc,omitempty"`      // 订单备注,长度限制128
 	PayProductType     string                `json:"payProductType,omitempty"` // 原订单产品类型,当orderType值为ALLOWANCE时,此字段必填;APPPAY:扫码
 	PayOrderNo         string                `json:"payOrderNo,omitempty"`     // 原订单商户订单号,当orderType值为ALLOWANCE时,此字段必填
 	IsGuarantee        string                `json:"isGuarantee,omitempty"`    // 担保交易标识,当orderType值为TRANSFER时,此字段可填写;true:需要担保。交易不会直接成功,资金临时冻结直到完成担保确认,false:不需要担保,交易直接完成

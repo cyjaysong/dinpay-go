@@ -122,7 +122,7 @@ type MerchantWxPublicApplyQueryRes struct {
 }
 
 type MerchantWxPublicApplyUpstreamDataItem struct {
-	ReportId          string   `json:"reportId,omitempty"`          // 报备ID
+	ReportId          int64    `json:"reportId,omitempty"`          // 报备ID
 	ChannelId         string   `json:"channelId,omitempty"`         // 渠道
 	UpstreamNo        string   `json:"upstreamNo,omitempty"`        // 上游商户号
 	AppIds            []string `json:"appIds,omitempty"`            // 支付公众号

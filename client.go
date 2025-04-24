@@ -22,6 +22,7 @@ type Client struct {
 	merchantPrivateKey *sm2.PrivateKey
 	platformPublicKey  *sm2.PublicKey
 	reqClient          *reqclient.Client
+	devMode            bool
 }
 
 func NewClient(platformMerchantId, merchantSM2PrivatePassword, merchantSM2PrivateKeyPath, platformSM2PublicKeyPath string,
@@ -50,6 +51,7 @@ func NewClient(platformMerchantId, merchantSM2PrivatePassword, merchantSM2Privat
 
 	client = &Client{platformMerchantId: platformMerchantId, merchantSM2PrivatePassword: merchantSM2PrivatePassword,
 		merchantSM2PrivateKeyPath: merchantSM2PrivateKeyPath, platformSM2PublicKeyPath: platformSM2PublicKeyPath,
+		devMode: devMode,
 	}
 
 	client.merchantPrivateKey, client.platformPublicKey = merchantPrivateKey, platformPublicKey

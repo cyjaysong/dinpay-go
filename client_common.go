@@ -3,13 +3,13 @@ package dinpay
 import (
 	"crypto/rand"
 	"errors"
-	"fmt"
 	"github.com/bytedance/sonic"
 	"github.com/deatil/go-cryptobin/cryptobin/crypto"
 	"github.com/deatil/go-cryptobin/gm/sm2"
 	"github.com/deatil/go-cryptobin/tool/encoding"
 	"github.com/imroc/req/v3"
 	nanoid "github.com/matoous/go-nanoid/v2"
+	"log"
 	"net/url"
 	"time"
 )
@@ -21,8 +21,10 @@ func (t *Client) getApiUrl(path string) string {
 // 公共相关接口请求
 func (t *Client) commonJsonPost(path string, body any) (baseRes *BaseRes[string], err error) {
 	timestampStr := time.Now().Format("20060102150405")
-
 	bodyJsonBytes, _ := sonic.Marshal(body)
+	if t.devMode {
+		log.Println("data:", string(bodyJsonBytes))
+	}
 	bodyEncryptKey := nanoid.MustGenerate(alphabet, 16)
 	bodyEncryptStr := t.SM4Encrypt(bodyJsonBytes, bodyEncryptKey)
 	merchantBaseReqMap := map[string]string{"data": bodyEncryptStr, "merchantId": t.platformMerchantId,
@@ -39,7 +41,9 @@ func (t *Client) commonJsonPost(path string, body any) (baseRes *BaseRes[string]
 func (t *Client) commonMultipartFormPost(path string, body any) (baseRes *BaseRes[string], err error) {
 	timestampStr := time.Now().Format("20060102150405")
 	bodyJsonBytes, _ := sonic.Marshal(body)
-	fmt.Println("data:", string(bodyJsonBytes))
+	if t.devMode {
+		log.Println("data:", string(bodyJsonBytes))
+	}
 	bodyEncryptKey := nanoid.MustGenerate(alphabet, 16)
 	bodyEncryptStr := t.SM4Encrypt(bodyJsonBytes, bodyEncryptKey)
 	var formData = url.Values{"data": []string{bodyEncryptStr}, "merchantId": []string{t.platformMerchantId},
@@ -56,7 +60,9 @@ func (t *Client) commonMultipartFormPost(path string, body any) (baseRes *BaseRe
 func (t *Client) merchantImageFormUpload(path string, body any, credentialType string, getContentFunc req.GetContentFunc) (baseRes *BaseRes[string], err error) {
 	timestampStr := time.Now().Format("20060102150405")
 	bodyJsonBytes, _ := sonic.Marshal(body)
-	fmt.Printf("data: %s \n", string(bodyJsonBytes))
+	if t.devMode {
+		log.Println("data:", string(bodyJsonBytes))
+	}
 	bodyEncryptKey := nanoid.MustGenerate(alphabet, 16)
 	bodyEncryptStr := t.SM4Encrypt(bodyJsonBytes, bodyEncryptKey)
 	var formData = url.Values{"data": []string{bodyEncryptStr}, "merchantId": []string{t.platformMerchantId},
@@ -74,9 +80,10 @@ func (t *Client) merchantImageFormUpload(path string, body any, credentialType s
 // 虚拟账户支付接口请求
 func (t *Client) accountPayPost(path string, body any) (baseRes *BaseRes[string], err error) {
 	timestampStr := time.Now().Format("20060102150405")
-
 	bodyJsonBytes, _ := sonic.Marshal(body)
-	fmt.Printf("data: %s \n", string(bodyJsonBytes))
+	if t.devMode {
+		log.Println("data:", string(bodyJsonBytes))
+	}
 	bodyEncryptKey := nanoid.MustGenerate(alphabet, 16)
 	bodyEncryptStr := t.SM4Encrypt(bodyJsonBytes, bodyEncryptKey)
 	merchantBaseReqMap := map[string]string{"data": bodyEncryptStr, "merchantId": t.platformMerchantId,
@@ -92,8 +99,10 @@ func (t *Client) accountPayPost(path string, body any) (baseRes *BaseRes[string]
 // 支付相关接口请求
 func (t *Client) appPayJsonPost(merchantId, path string, body any) (baseRes *BaseRes[string], err error) {
 	timestampStr := time.Now().Format("20060102150405")
-
 	bodyJsonBytes, _ := sonic.Marshal(body)
+	if t.devMode {
+		log.Println("data:", string(bodyJsonBytes))
+	}
 	bodyEncryptKey := nanoid.MustGenerate(alphabet, 16)
 	bodyEncryptStr := t.SM4Encrypt(bodyJsonBytes, bodyEncryptKey)
 	merchantBaseReqMap := map[string]string{"data": bodyEncryptStr, "merchantId": merchantId,
@@ -109,8 +118,10 @@ func (t *Client) appPayJsonPost(merchantId, path string, body any) (baseRes *Bas
 // 结算相关接口请求
 func (t *Client) settlementPost(merchantId, path string, body any) (baseRes *BaseRes[string], err error) {
 	timestampStr := time.Now().Format("20060102150405")
-
 	bodyJsonBytes, _ := sonic.Marshal(body)
+	if t.devMode {
+		log.Println("data:", string(bodyJsonBytes))
+	}
 	bodyEncryptKey := nanoid.MustGenerate(alphabet, 16)
 	bodyEncryptStr := t.SM4Encrypt(bodyJsonBytes, bodyEncryptKey)
 	merchantBaseReqMap := map[string]string{"data": bodyEncryptStr, "merchantId": merchantId,
@@ -161,8 +172,8 @@ func (t *Client) SM4Encrypt(data []byte, key string) (encryptStr string) {
 	sm4Crypto := crypto.New().SM4().CBC()
 	sm4Crypto = sm4Crypto.PKCS7Padding().SetIv(string(ivBytes))
 	sm4Crypto = sm4Crypto.SetKey(key).FromBytes(data)
-	if sm4Crypto = sm4Crypto.Encrypt(); sm4Crypto.Error() != nil {
-		fmt.Println("SM4加密出错:", sm4Crypto.Error())
+	if sm4Crypto = sm4Crypto.Encrypt(); sm4Crypto.Error() != nil && t.devMode {
+		log.Print("Dinpay SM4加密出错:", sm4Crypto.Error())
 	}
 	return sm4Crypto.ToBase64String()
 }

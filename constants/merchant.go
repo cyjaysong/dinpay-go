@@ -540,4 +540,10 @@ var (
 		"F2F":     "当面付", // 对应线下
 		"PRE_F2F": "线下预授权",
 	}
+
+	ContractSignStatus = map[string]string{
+		"UNSIGNED":   "未签约",
+		"SIGNED":     "已签约",
+		"NO_PRODUCE": "未生成协议",
+	}
 )

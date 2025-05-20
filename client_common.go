@@ -134,6 +134,25 @@ func (t *Client) settlementPost(merchantId, path string, body any) (baseRes *Bas
 	return t.returnStringBaseRes(response)
 }
 
+// 代付相关接口请求
+func (t *Client) transferPost(merchantId, path string, body any) (baseRes *BaseRes[string], err error) {
+	timestampStr := time.Now().Format("20060102150405")
+	bodyJsonBytes, _ := sonic.Marshal(body)
+	if t.devMode {
+		log.Println("data:", string(bodyJsonBytes))
+	}
+	bodyEncryptKey := nanoid.MustGenerate(alphabet, 16)
+	bodyEncryptStr := t.SM4Encrypt(bodyJsonBytes, bodyEncryptKey)
+	merchantBaseReqMap := map[string]string{"data": bodyEncryptStr, "merchantId": merchantId,
+		"encryptionKey": t.SM2Encrypt(bodyEncryptKey), "timestamp": timestampStr,
+		"signatureMethod": "SM3WITHSM2", "sign": t.SM3WithSM2Sign([]byte(bodyEncryptStr))}
+	response, err := t.reqClient.R().SetBodyJsonMarshal(merchantBaseReqMap).Post(t.getApiUrl(path))
+	if err != nil {
+		return nil, err
+	}
+	return t.returnStringBaseRes(response)
+}
+
 func (t *Client) returnStringBaseRes(response *req.Response) (baseRes *BaseRes[string], err error) {
 	baseRes = new(BaseRes[string])
 	if err = response.UnmarshalJson(baseRes); err != nil {

@@ -1,4 +1,4 @@
-package dinpay
+package model
 
 // MerchantAppPaySettingReq 商户扫码产品开通
 type MerchantAppPaySettingReq struct {

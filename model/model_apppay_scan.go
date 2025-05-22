@@ -1,4 +1,4 @@
-package dinpay
+package model
 
 // AppPayScanOrderReq 主扫/被扫下单接口
 type AppPayScanOrderReq struct {

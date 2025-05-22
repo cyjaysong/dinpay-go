@@ -4,12 +4,13 @@ import (
 	"bytes"
 	"errors"
 	"github.com/bytedance/sonic"
+	"github.com/cyjaysong/dinpay-go/model"
 	"io"
 	"net/http"
 )
 
 // ComplaintNotifyVerify 投诉内容回调验签
-func (t *Client) ComplaintNotifyVerify(httpBody []byte) (notifyReq *ComplaintNotifyReq, err error) {
+func (t *Client) ComplaintNotifyVerify(httpBody []byte) (notifyReq *model.ComplaintNotifyReq, err error) {
 	reqReq := http.Request{Method: "POST", Body: io.NopCloser(bytes.NewBuffer(httpBody)), Header: http.Header{}}
 	reqReq.Header.Set(`Content-Type`, `application/x-www-form-urlencoded`)
 	if err = reqReq.ParseForm(); err != nil {
@@ -27,11 +28,11 @@ func (t *Client) ComplaintNotifyVerify(httpBody []byte) (notifyReq *ComplaintNot
 		return nil, err
 	}
 
-	var baseRes *NotifyReq[string]
+	var baseRes *model.NotifyReq[string]
 	if err = sonic.Unmarshal(httpBody, &baseRes); err != nil {
 		return nil, err
 	}
-	if notifyReq, err = ParseNotifyReq[ComplaintNotifyReqBody](baseRes); err != nil {
+	if notifyReq, err = model.ParseNotifyReq[model.ComplaintNotifyReqBody](baseRes); err != nil {
 		return nil, err
 	}
 	return

@@ -1,4 +1,4 @@
-package dinpay
+package model
 
 import "time"
 

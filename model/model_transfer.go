@@ -1,4 +1,4 @@
-package dinpay
+package model
 
 // TransferOrderReq 商户代付下单
 type TransferOrderReq struct {

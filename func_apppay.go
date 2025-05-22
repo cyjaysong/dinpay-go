@@ -4,12 +4,13 @@ import (
 	"bytes"
 	"errors"
 	"github.com/bytedance/sonic"
+	"github.com/cyjaysong/dinpay-go/model"
 	"io"
 	"net/http"
 )
 
 // AppPayScanOrder 主扫:用户扫商户/被扫:商户扫用户 下单
-func (t *Client) AppPayScanOrder(reqBody AppPayScanOrderReq) (res *BaseRes[AppPayScanOrderRes], err error) {
+func (t *Client) AppPayScanOrder(reqBody model.AppPayScanOrderReq) (res *model.BaseRes[model.AppPayScanOrderRes], err error) {
 	const path = "/trx/api/appPay/pay"
 	reqBody.InterfaceName = "AppPay"
 	if reqBody.MarketingRules != nil {
@@ -20,15 +21,15 @@ func (t *Client) AppPayScanOrder(reqBody AppPayScanOrderReq) (res *BaseRes[AppPa
 		reqBody.SplitType = "FIXED_AMOUNT"
 		reqBody.SplitRulesJson, _ = sonic.MarshalString(reqBody.SplitRules)
 	}
-	var baseRes *BaseRes[string]
+	var baseRes *model.BaseRes[string]
 	if baseRes, err = t.appPayJsonPost(reqBody.MerchantId, path, reqBody); err != nil {
 		return
 	}
-	return ParseRes[AppPayScanOrderRes](baseRes)
+	return model.ParseRes[model.AppPayScanOrderRes](baseRes)
 }
 
 // AppPayPublicPreOrder 公众号/JS/服务窗预下单
-func (t *Client) AppPayPublicPreOrder(reqBody AppPayPublicPreOrderReq) (res *BaseRes[AppPayPublicPreOrderRes], err error) {
+func (t *Client) AppPayPublicPreOrder(reqBody model.AppPayPublicPreOrderReq) (res *model.BaseRes[model.AppPayPublicPreOrderRes], err error) {
 	const path = "/trx/api/appPay/payPublic"
 	reqBody.InterfaceName, reqBody.PaymentMethods = "AppPayPublic", "PUBLIC"
 	if reqBody.MarketingRules != nil {
@@ -39,21 +40,21 @@ func (t *Client) AppPayPublicPreOrder(reqBody AppPayPublicPreOrderReq) (res *Bas
 		reqBody.SplitType = "FIXED_AMOUNT"
 		reqBody.SplitRulesJson, _ = sonic.MarshalString(reqBody.SplitRules)
 	}
-	var baseRes *BaseRes[string]
+	var baseRes *model.BaseRes[string]
 	if baseRes, err = t.appPayJsonPost(reqBody.MerchantId, path, reqBody); err != nil {
 		return nil, err
 	}
-	if res, err = ParseRes[AppPayPublicPreOrderRes](baseRes); err != nil {
+	if res, err = model.ParseRes[model.AppPayPublicPreOrderRes](baseRes); err != nil {
 		return
 	} else if res.Code == "0000" && res.Data.PayInfoJson != "" {
-		res.Data.PayInfo = &AppPayPublicPreOrderPayInfo{}
+		res.Data.PayInfo = &model.AppPayPublicPreOrderPayInfo{}
 		err = sonic.UnmarshalString(res.Data.PayInfoJson, res.Data.PayInfo)
 	}
 	return
 }
 
 // AppPayWapPreOrder WAP(H5)预下单
-func (t *Client) AppPayWapPreOrder(reqBody AppPayWapPreOrderReq) (res *BaseRes[AppPayWapPreOrderRes], err error) {
+func (t *Client) AppPayWapPreOrder(reqBody model.AppPayWapPreOrderReq) (res *model.BaseRes[model.AppPayWapPreOrderRes], err error) {
 	const path = "/trx/api/appPay/payH5"
 	reqBody.InterfaceName, reqBody.PaymentMethods = "AppPayH5WFT", "WAP"
 	if reqBody.MarketingRules != nil {
@@ -64,15 +65,15 @@ func (t *Client) AppPayWapPreOrder(reqBody AppPayWapPreOrderReq) (res *BaseRes[A
 		reqBody.SplitType = "FIXED_AMOUNT"
 		reqBody.SplitRulesJson, _ = sonic.MarshalString(reqBody.SplitRules)
 	}
-	var baseRes *BaseRes[string]
+	var baseRes *model.BaseRes[string]
 	if baseRes, err = t.appPayJsonPost(reqBody.MerchantId, path, reqBody); err != nil {
 		return nil, err
 	}
-	return ParseRes[AppPayWapPreOrderRes](baseRes)
+	return model.ParseRes[model.AppPayWapPreOrderRes](baseRes)
 }
 
 // AppPaySdkPreOrder SDK(APP)预下单接口
-func (t *Client) AppPaySdkPreOrder(reqBody AppPaySdkPreOrderReq) (res *BaseRes[AppPaySdkPreOrderRes], err error) {
+func (t *Client) AppPaySdkPreOrder(reqBody model.AppPaySdkPreOrderReq) (res *model.BaseRes[model.AppPaySdkPreOrderRes], err error) {
 	const path = "/trx/api/appPay/paySdk"
 	reqBody.InterfaceName, reqBody.PaymentMethods = "AppPaySdk", "SDK"
 	if reqBody.MarketingRules != nil {
@@ -83,15 +84,15 @@ func (t *Client) AppPaySdkPreOrder(reqBody AppPaySdkPreOrderReq) (res *BaseRes[A
 		reqBody.SplitType = "FIXED_AMOUNT"
 		reqBody.SplitRulesJson, _ = sonic.MarshalString(reqBody.SplitRules)
 	}
-	var baseRes *BaseRes[string]
+	var baseRes *model.BaseRes[string]
 	if baseRes, err = t.appPayJsonPost(reqBody.MerchantId, path, reqBody); err != nil {
 		return nil, err
 	}
-	return ParseRes[AppPaySdkPreOrderRes](baseRes)
+	return model.ParseRes[model.AppPaySdkPreOrderRes](baseRes)
 }
 
 // AppPayAppletPreOrder 小程序预下单
-func (t *Client) AppPayAppletPreOrder(reqBody AppPayAppletPreOrderReq) (res *BaseRes[AppPayAppletPreOrderRes], err error) {
+func (t *Client) AppPayAppletPreOrder(reqBody model.AppPayAppletPreOrderReq) (res *model.BaseRes[model.AppPayAppletPreOrderRes], err error) {
 	const path = "/trx/api/appPay/payApplet"
 	reqBody.InterfaceName, reqBody.PaymentMethods = "AppPayApplet", "APPLET"
 	if reqBody.MarketingRules != nil {
@@ -102,28 +103,28 @@ func (t *Client) AppPayAppletPreOrder(reqBody AppPayAppletPreOrderReq) (res *Bas
 		reqBody.SplitType = "FIXED_AMOUNT"
 		reqBody.SplitRulesJson, _ = sonic.MarshalString(reqBody.SplitRules)
 	}
-	var baseRes *BaseRes[string]
+	var baseRes *model.BaseRes[string]
 	if baseRes, err = t.appPayJsonPost(reqBody.MerchantId, path, reqBody); err != nil {
 		return nil, err
 	}
-	if res, err = ParseRes[AppPayAppletPreOrderRes](baseRes); err != nil {
+	if res, err = model.ParseRes[model.AppPayAppletPreOrderRes](baseRes); err != nil {
 		return
 	} else if res.Code == "0000" && res.Data.PayInfoJson != "" {
-		res.Data.PayInfo = &AppPayAppletPreOrderPayInfo{}
+		res.Data.PayInfo = &model.AppPayAppletPreOrderPayInfo{}
 		err = sonic.UnmarshalString(res.Data.PayInfoJson, res.Data.PayInfo)
 	}
 	return
 }
 
 // AppPayOrderQuery 交易订单查询
-func (t *Client) AppPayOrderQuery(reqBody AppPayOrderQueryReq) (res *BaseRes[AppPayOrderQueryRes], err error) {
+func (t *Client) AppPayOrderQuery(reqBody model.AppPayOrderQueryReq) (res *model.BaseRes[model.AppPayOrderQueryRes], err error) {
 	const path = "/trx/api/appPay/payQuery"
 	reqBody.InterfaceName = "AppPayQuery"
-	var baseRes *BaseRes[string]
+	var baseRes *model.BaseRes[string]
 	if baseRes, err = t.appPayJsonPost(reqBody.MerchantId, path, reqBody); err != nil {
 		return nil, err
 	}
-	res, err = ParseRes[AppPayOrderQueryRes](baseRes)
+	res, err = model.ParseRes[model.AppPayOrderQueryRes](baseRes)
 	if err != nil {
 		return nil, err
 	}
@@ -141,7 +142,7 @@ func (t *Client) AppPayOrderQuery(reqBody AppPayOrderQueryReq) (res *BaseRes[App
 }
 
 // OrderPayResultNotifyVerify 订单支付结果异步通知验签
-func (t *Client) OrderPayResultNotifyVerify(httpBody []byte) (notifyReq *OrderPayResultNotifyReq, err error) {
+func (t *Client) OrderPayResultNotifyVerify(httpBody []byte) (notifyReq *model.OrderPayResultNotifyReq, err error) {
 	reqReq := http.Request{Method: "POST", Body: io.NopCloser(bytes.NewBuffer(httpBody)), Header: http.Header{}}
 	reqReq.Header.Set(`Content-Type`, `application/x-www-form-urlencoded`)
 	if err = reqReq.ParseForm(); err != nil {
@@ -159,11 +160,11 @@ func (t *Client) OrderPayResultNotifyVerify(httpBody []byte) (notifyReq *OrderPa
 		return nil, err
 	}
 
-	var baseRes *NotifyReq[string]
+	var baseRes *model.NotifyReq[string]
 	if err = sonic.Unmarshal(httpBody, &baseRes); err != nil {
 		return nil, err
 	}
-	if notifyReq, err = ParseNotifyReq[OrderPayResultNotifyReqBody](baseRes); err != nil {
+	if notifyReq, err = model.ParseNotifyReq[model.OrderPayResultNotifyReqBody](baseRes); err != nil {
 		return nil, err
 	}
 	if len(notifyReq.Data.MarketingRulesJson) > 0 {

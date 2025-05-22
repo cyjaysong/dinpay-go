@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"errors"
 	"github.com/bytedance/sonic"
+	"github.com/cyjaysong/dinpay-go/model"
 	"github.com/deatil/go-cryptobin/cryptobin/crypto"
 	"github.com/deatil/go-cryptobin/gm/sm2"
 	"github.com/deatil/go-cryptobin/tool/encoding"
@@ -19,7 +20,7 @@ func (t *Client) getApiUrl(path string) string {
 }
 
 // 公共相关接口请求
-func (t *Client) commonJsonPost(path string, body any) (baseRes *BaseRes[string], err error) {
+func (t *Client) commonJsonPost(path string, body any) (baseRes *model.BaseRes[string], err error) {
 	timestampStr := time.Now().Format("20060102150405")
 	bodyJsonBytes, _ := sonic.Marshal(body)
 	if t.devMode {
@@ -38,7 +39,7 @@ func (t *Client) commonJsonPost(path string, body any) (baseRes *BaseRes[string]
 }
 
 // 公共相关接口请求
-func (t *Client) commonMultipartFormPost(path string, body any) (baseRes *BaseRes[string], err error) {
+func (t *Client) commonMultipartFormPost(path string, body any) (baseRes *model.BaseRes[string], err error) {
 	timestampStr := time.Now().Format("20060102150405")
 	bodyJsonBytes, _ := sonic.Marshal(body)
 	if t.devMode {
@@ -57,7 +58,7 @@ func (t *Client) commonMultipartFormPost(path string, body any) (baseRes *BaseRe
 }
 
 // 商户图片上传
-func (t *Client) merchantImageFormUpload(path string, body any, credentialType string, getContentFunc req.GetContentFunc) (baseRes *BaseRes[string], err error) {
+func (t *Client) merchantImageFormUpload(path string, body any, credentialType string, getContentFunc req.GetContentFunc) (baseRes *model.BaseRes[string], err error) {
 	timestampStr := time.Now().Format("20060102150405")
 	bodyJsonBytes, _ := sonic.Marshal(body)
 	if t.devMode {
@@ -78,7 +79,7 @@ func (t *Client) merchantImageFormUpload(path string, body any, credentialType s
 }
 
 // 虚拟账户支付接口请求
-func (t *Client) accountPayPost(path string, body any) (baseRes *BaseRes[string], err error) {
+func (t *Client) accountPayPost(path string, body any) (baseRes *model.BaseRes[string], err error) {
 	timestampStr := time.Now().Format("20060102150405")
 	bodyJsonBytes, _ := sonic.Marshal(body)
 	if t.devMode {
@@ -97,7 +98,7 @@ func (t *Client) accountPayPost(path string, body any) (baseRes *BaseRes[string]
 }
 
 // 支付相关接口请求
-func (t *Client) appPayJsonPost(merchantId, path string, body any) (baseRes *BaseRes[string], err error) {
+func (t *Client) appPayJsonPost(merchantId, path string, body any) (baseRes *model.BaseRes[string], err error) {
 	timestampStr := time.Now().Format("20060102150405")
 	bodyJsonBytes, _ := sonic.Marshal(body)
 	if t.devMode {
@@ -116,7 +117,7 @@ func (t *Client) appPayJsonPost(merchantId, path string, body any) (baseRes *Bas
 }
 
 // 结算相关接口请求
-func (t *Client) settlementPost(merchantId, path string, body any) (baseRes *BaseRes[string], err error) {
+func (t *Client) settlementPost(merchantId, path string, body any) (baseRes *model.BaseRes[string], err error) {
 	timestampStr := time.Now().Format("20060102150405")
 	bodyJsonBytes, _ := sonic.Marshal(body)
 	if t.devMode {
@@ -135,7 +136,7 @@ func (t *Client) settlementPost(merchantId, path string, body any) (baseRes *Bas
 }
 
 // 代付相关接口请求
-func (t *Client) transferPost(merchantId, path string, body any) (baseRes *BaseRes[string], err error) {
+func (t *Client) transferPost(merchantId, path string, body any) (baseRes *model.BaseRes[string], err error) {
 	timestampStr := time.Now().Format("20060102150405")
 	bodyJsonBytes, _ := sonic.Marshal(body)
 	if t.devMode {
@@ -153,8 +154,8 @@ func (t *Client) transferPost(merchantId, path string, body any) (baseRes *BaseR
 	return t.returnStringBaseRes(response)
 }
 
-func (t *Client) returnStringBaseRes(response *req.Response) (baseRes *BaseRes[string], err error) {
-	baseRes = new(BaseRes[string])
+func (t *Client) returnStringBaseRes(response *req.Response) (baseRes *model.BaseRes[string], err error) {
+	baseRes = new(model.BaseRes[string])
 	if err = response.UnmarshalJson(baseRes); err != nil {
 		return nil, err
 	} else if baseRes.Code != "0000" {

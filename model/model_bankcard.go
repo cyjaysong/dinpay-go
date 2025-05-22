@@ -1,4 +1,4 @@
-package dinpay
+package model
 
 // MerchantBankcardQueryRes 商户银行卡查询
 type MerchantBankcardQueryRes struct {

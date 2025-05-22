@@ -1,4 +1,4 @@
-package dinpay
+package model
 
 // DelayedSplitReq 订单延迟分账
 type DelayedSplitReq struct {

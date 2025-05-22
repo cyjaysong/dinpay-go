@@ -5,6 +5,7 @@ pem
 .idea
 .exe
 config/
+test/
 z_*
 
 *.log_lock

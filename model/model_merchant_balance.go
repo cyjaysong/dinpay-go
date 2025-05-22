@@ -1,4 +1,4 @@
-package dinpay
+package model
 
 // MerchantBalanceQueryReq 商户余额查询接口
 type MerchantBalanceQueryReq struct {

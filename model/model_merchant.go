@@ -1,4 +1,4 @@
-package dinpay
+package model
 
 // MerchantInfoQueryReq 商户信息查询
 type MerchantInfoQueryReq struct {

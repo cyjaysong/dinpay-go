@@ -1,4 +1,4 @@
-package dinpay
+package model
 
 // MerchantApplyAppReportReq 商户上游报备
 type MerchantApplyAppReportReq struct {

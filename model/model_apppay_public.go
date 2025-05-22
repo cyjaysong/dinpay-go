@@ -1,4 +1,4 @@
-package dinpay
+package model
 
 // AppPayPublicPreOrderReq 公众号/JS/服务窗预下单接口
 type AppPayPublicPreOrderReq struct {

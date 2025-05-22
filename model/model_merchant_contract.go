@@ -1,4 +1,4 @@
-package dinpay
+package model
 
 // GetMerchantSignContractUrlReq 获取商户签章合同链接
 type GetMerchantSignContractUrlReq struct {

@@ -1,4 +1,4 @@
-package dinpay
+package model
 
 // AppPayRefundMarketingRule 交易退款营销规则
 type AppPayRefundMarketingRule struct {

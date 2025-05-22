@@ -1,4 +1,4 @@
-package dinpay
+package model
 
 type WxPayGoods struct {
 	CostPrice   int               `json:"cost_price,omitempty"` // 订单原价 订单总金额，与total_fee一致

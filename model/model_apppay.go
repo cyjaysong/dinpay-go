@@ -1,4 +1,4 @@
-package dinpay
+package model
 
 // AppPayPreOrderMarketingRule 交易下单营销规则
 type AppPayPreOrderMarketingRule struct {

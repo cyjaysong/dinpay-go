@@ -1,4 +1,4 @@
-package dinpay
+package model
 
 // AccountPayOrderReq 账户支付下单
 type AccountPayOrderReq struct {

@@ -1,4 +1,4 @@
-package dinpay
+package model
 
 // MerchantSettlementReq 商户结算接口
 type MerchantSettlementReq struct {

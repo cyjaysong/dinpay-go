@@ -1,4 +1,4 @@
-package dinpay
+package model
 
 // AppPayAppletPreOrderReq 小程序预下单接口
 type AppPayAppletPreOrderReq struct {

@@ -24,6 +24,7 @@ type MerchantModifyInfoReq struct {
 	BusinessDateStart           string                              `json:"businessStartDate,omitempty"`      // 经营起始日期,yyyyMMdd,非个人商户必传
 	BusinessDateEnd             string                              `json:"businessEndDate,omitempty"`        // 经营结束日期,yyyyMMdd或者长期有效,非个人商户必传
 	LegalPerson                 string                              `json:"legalPerson,omitempty"`            // 法人姓名(需人工审核)
+	LegalPersonPhone            string                              `json:"legalPersonPhone,omitempty"`       // 法人手机号(需人工审核)
 	LegalPersonId               string                              `json:"legalPersonID,omitempty"`          // 法人身份证号(需人工审核)
 	LegalIdType                 string                              `json:"idType,omitempty"`                 // 法人证件类型,见常量 constants.IdType
 	LegalIdCardStartDate        string                              `json:"idCardStartDate,omitempty"`        // 法人身份证有效期开始,yyyyMMdd,开通微信产品必传
@@ -46,6 +47,10 @@ type MerchantModifyInfoReq struct {
 	ChangeSettleInfo            *MerchantModifyInfoChangeSettleInfo `json:"changeSettleInfo,omitempty"`       // 结算卡信息修改域
 	ServiceCodes                string                              `json:"serviceCodes,omitempty"`           // 支付宝商户服务类型,如:"[\"F2F\",\"PRE_F2F\"]",constants.AlipayServiceCode
 	SpecialSignName             bool                                `json:"specialSignName,omitempty"`        // 是否需要格式化商户名称,根据微信定义的签约名规则去报备,只有营业执照名字为“*”，或者个人商户才传true
+	WebSite                     string                              `json:"webSite,omitempty"`                // 商户交易网站地址,与“其他产品信息”二选一必填
+	OtherPdInfo                 string                              `json:"otherPdInfo,omitempty"`            // 其他产品信息,可输入公众号/小程序/app名称,与“商户交易网站地址”二选一必填
+	AccessUrl                   string                              `json:"accessUrl,omitempty"`              // 接入地址,空
+	IcpFiling                   string                              `json:"icpFiling,omitempty"`              // ICP备案号，平台商类型为服务商时必填，平台商类型为SaaS系统商的子商户默认读取平台商的 ICP 备案号
 	FileUrlMap                  map[string]string                   `json:"imageUrlMap,omitempty"`            // 文件URL,constants.MerchantCredentialType
 }
 

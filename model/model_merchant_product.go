@@ -111,7 +111,7 @@ type MerchantTransferSettingReq struct {
 	MerchantId      string  `json:"subMerchantId"`      // 子商户编号,进件审核通过后才有的商户号
 	ProductType     string  `json:"productType"`        // 产品类型:固定值:TRANSFER:代付产品
 	SettlementCycle string  `json:"settlementCycle"`    // 资金周期:T1,D0,D1,constants.SettlementCycle
-	CardType        string  `json:"cardType"`           // 账户属性:对公结算(TOPUBLIC)或对私结算(TOPRIVATE),constants.SettleBankType
+	CardType        string  `json:"cardType"`           // 账户属性:constants.OnlineBankType,ALL,对公(B2B)或对私结算(B2C)
 	CalcType        string  `json:"calcType"`           // 计算类型;constants.CalcType,SINGLE:单笔收费;RATIO:比率收费
 	Fee             float64 `json:"fee,omitempty"`      // 费率,0.50代表0.5元或0.5%(单位,见计算类型 CalcType)
 	Floating        float64 `json:"floating,omitempty"` // 加收费率:百分比(%),小数后两位(非必填)
@@ -122,7 +122,7 @@ type MerchantTransferSettingReq struct {
 type MerchantTransferSettingRes struct {
 	MerchantId      string  `json:"subMerchantId"`      // 子商户编号,进件审核通过后才有的商户号
 	SettlementCycle string  `json:"settlementCycle"`    // 资金周期:T1,D0,D1,constants.SettlementCycle
-	CardType        string  `json:"cardType"`           // 账户属性:对公结算(TOPUBLIC)或对私结算(TOPRIVATE),constants.SettleBankType
+	CardType        string  `json:"cardType"`           // 账户属性:constants.OnlineBankType,ALL,对公(B2B)或对私结算(B2C)
 	CalcType        string  `json:"calcType"`           // 计算类型;constants.CalcType,SINGLE:单笔收费;RATIO:比率收费
 	Fee             float64 `json:"fee,omitempty"`      // 费率,0.50代表0.5元或0.5%(单位,见计算类型 CalcType)
 	Floating        float64 `json:"floating,omitempty"` // 加收费率:百分比(%),小数后两位(非必填)

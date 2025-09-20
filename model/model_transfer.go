@@ -25,9 +25,9 @@ type TransferOrderRes struct {
 
 // TransferQueryReq 商户代付订单查询
 type TransferQueryReq struct {
-	InterfaceName string `json:"interfaceName"` // 接口名称:固定值:accountPayQuery
-	MerchantId    string `json:"-"`             // 商户编号
-	OrderNo       string `json:"orderNo"`       // 代付订单号,代付订单发起时的代付订单号
+	InterfaceName string `json:"interfaceName"`   // 接口名称:固定值:accountPayQuery
+	MerchantId    string `json:"-"`               // 商户编号
+	OrderNo       string `json:"transferOrderNo"` // 代付订单号,代付订单发起时的代付订单号
 }
 
 // TransferQueryRes 商户代付订单查询

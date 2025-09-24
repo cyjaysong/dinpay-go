@@ -3,10 +3,11 @@ package dinpay
 import (
 	"bytes"
 	"errors"
-	"github.com/bytedance/sonic"
-	"github.com/cyjaysong/dinpay-go/model"
 	"io"
 	"net/http"
+
+	"github.com/bytedance/sonic"
+	"github.com/cyjaysong/dinpay-go/model"
 )
 
 // MerchantRegister 商户入驻

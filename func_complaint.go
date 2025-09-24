@@ -3,10 +3,11 @@ package dinpay
 import (
 	"bytes"
 	"errors"
-	"github.com/bytedance/sonic"
-	"github.com/cyjaysong/dinpay-go/model"
 	"io"
 	"net/http"
+
+	"github.com/bytedance/sonic"
+	"github.com/cyjaysong/dinpay-go/model"
 )
 
 // ComplaintNotifyVerify 投诉内容回调验签

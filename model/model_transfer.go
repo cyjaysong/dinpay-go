@@ -43,14 +43,14 @@ type TransferQueryRes struct {
 
 // TransferNotifyReqBody 商户代付异步通知Body
 type TransferNotifyReqBody struct {
-	InterfaceName  string  `json:"interfaceName"`            // 接口名称:固定值:Transfer
-	OrderNo        string  `json:"transferOrderNo"`          // 代付订单发起时的代付订单号
-	Amount         float64 `json:"transferAmount,omitempty"` // 代付金额,金额单位为元,最少值0.01
-	TransferStatus string  `json:"transferStatus"`           // 代付状态,RECEIVE:已接收;INIT:初始化;DOING:处理中;SUCCESS:成功;FAIL:失败
-	ChannelNumber  string  `json:"channelNumber"`            // 平台流水号,虚拟账户支付唯一平台流水号
-	ChannelMsg     string  `json:"channelMsg"`               // 代付返回信息
-	CreateDate     string  `json:"createDate"`               // 订单创建时间,创建时间:格式为:yyyy-MM-dd HH:mm:ss
-	CompleteDate   string  `json:"completeDate"`             // 订单完成时间,完成时间:格式为:yyyy-MM-dd HH:mm:ss
-	NotifyType     string  `json:"notifyType"`               // 通知类型,ORDER_STATUS:普通通知;RETURN_REMITTANCE	:退汇通知
+	InterfaceName  string  `json:"interfaceName"`         // 接口名称:固定值:Transfer
+	OrderNo        string  `json:"transferOrderNo"`       // 代付订单发起时的代付订单号
+	Amount         float64 `json:"transferAmount,string"` // 代付金额,金额单位为元,最少值0.01
+	TransferStatus string  `json:"transferStatus"`        // 代付状态,RECEIVE:已接收;INIT:初始化;DOING:处理中;SUCCESS:成功;FAIL:失败
+	ChannelNumber  string  `json:"channelNumber"`         // 平台流水号,虚拟账户支付唯一平台流水号
+	ChannelMsg     string  `json:"channelMsg"`            // 代付返回信息
+	CreateDate     string  `json:"createDate"`            // 订单创建时间,创建时间:格式为:yyyy-MM-dd HH:mm:ss
+	CompleteDate   string  `json:"completeDate"`          // 订单完成时间,完成时间:格式为:yyyy-MM-dd HH:mm:ss
+	NotifyType     string  `json:"notifyType"`            // 通知类型,ORDER_STATUS:普通通知;RETURN_REMITTANCE	:退汇通知
 }
 type TransferNotifyReq = NotifyReq[TransferNotifyReqBody]
